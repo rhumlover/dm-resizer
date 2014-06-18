@@ -1,0 +1,48 @@
+{
+  "name": "grunt-staticfarm",
+  "description": "Uploads assets to resizer depot",
+  "version": "0.1.0",
+  "homepage": "https://github.com/rhumlover/grunt-staticfarm",
+  "author": {
+    "name": "Thomas Le Jeune",
+    "email": "thomas.lejeune@dailymotion.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/trhumlover/grunt-staticfarm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rhumlover/grunt-staticfarm/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/rhumlover/grunt-staticfarm/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "Gruntfile.coffee",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-coffeelint": ">= 0.0.8",
+    "querystring": "~0.2.0",
+    "mocha": "~1.17.1",
+    "nedb": "~0.10.2",
+    "commander": "~2.1.0",
+    "ansi": "~0.2.1",
+    "q": "~1.0.0"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.1"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}

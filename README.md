@@ -1,4 +1,4 @@
-# grunt-staticfarm
+# grunt-resizer
 
 > Uploads assets to resizer depot
 

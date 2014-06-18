@@ -1,6 +1,6 @@
 #
-# * grunt-staticfarm
-# * https://github.com/rhumlover/grunt-staticfarm
+# * dm-resizer
+# * https://github.com/rhumlover/dm-resizer
 # *
 # * Copyright (c) 2014 Thomas Le Jeune
 # * Licensed under the MIT license.

@@ -14,7 +14,7 @@ walk = (arr, itemFn, endFn) ->
 
 module.exports = (grunt) ->
 
-    grunt.registerMultiTask 'staticfarm', 'Uploads assets to resizer depot', () ->
+    grunt.registerMultiTask 'resizer', 'Uploads assets to resizer depot', () ->
         done = @async()
         _logger = Logger
         _cursor = _logger.cursor

@@ -19,7 +19,7 @@ module.exports = (grunt) ->
         clean:
             tests: ["tmp"]
 
-        staticfarm:
+        resizer:
             test:
                 files: [
                     'test/assets/claquos.jpg'
@@ -37,7 +37,7 @@ module.exports = (grunt) ->
     # plugin's task(s), then test the result.
     grunt.registerTask "test", [
         "clean"
-        "staticfarm"
+        "resizer"
     ]
 
     # By default, lint and run all tests.

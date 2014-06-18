@@ -1,23 +1,23 @@
 {
-  "name": "grunt-staticfarm",
+  "name": "dm-resizer",
   "description": "Uploads assets to resizer depot",
   "version": "0.1.0",
-  "homepage": "https://github.com/rhumlover/grunt-staticfarm",
+  "homepage": "https://github.com/rhumlover/dm-resizer",
   "author": {
     "name": "Thomas Le Jeune",
     "email": "thomas.lejeune@dailymotion.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/trhumlover/grunt-staticfarm.git"
+    "url": "git://github.com/trhumlover/dm-resizer.git"
   },
   "bugs": {
-    "url": "https://github.com/rhumlover/grunt-staticfarm/issues"
+    "url": "https://github.com/rhumlover/dm-resizer/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/rhumlover/grunt-staticfarm/blob/master/LICENSE-MIT"
+      "url": "https://github.com/rhumlover/dm-resizer/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.coffee",

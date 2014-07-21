@@ -1,0 +1,34 @@
+#!/usr/bin/env coffee
+fs = require 'fs'
+path = require 'path'
+
+# ------------------------
+# CLI INTERFACE
+# ------------------------
+list = (val) -> val.split ','
+
+program = require 'commander'
+program
+    .version('0.1.0')
+    .usage('[options] <file ...>')
+    .option('-c, --conf', 'read configuration from a file')
+    .option('-i, --invalidate', 'invalidate a file by providing its hash')
+    .option('-l, --list', 'list deposed files')
+    .option('-u, --user', 'act as user')
+    .option('-r, --recursive', 'upload a folder recursively when parsed')
+    .option('-db, --database', 'use a specific file as database')
+    .option('--silent', 'do not save version hashes')
+    .parse(process.argv)
+
+args = program.args
+
+if program.invalidate
+    return require('./cli-tasks/invalidate')(args)
+
+if program.list
+    return require('./cli-tasks/list')(args)
+
+if not args.length then return program.help()
+
+# Default task: Upload !
+require('./cli-tasks/upload')(args, {user:program.user, db:program.db})

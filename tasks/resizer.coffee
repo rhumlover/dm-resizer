@@ -69,10 +69,10 @@ module.exports = (grunt) ->
                     _logger.writeln "   url: #{asset.url}, hash: #{asset.hash}\n"
 
                     if update?
-                        do () ->
+                        do ->
                             try
-                                files = grunt.file.expand {}, update
-                                replaceHTMLReference asset.file.inputpath, asset.url, files
+                                dests = grunt.file.expand {}, update
+                                replaceHTMLReference asset.file.inputpath, asset.url, dests
                             catch e
                                 grunt.log.error e
                             fileDoneCb()

@@ -8,8 +8,8 @@ querystring = require 'querystring'
 
 class StaticFarmUploader
 
-    DEFAULT_DB_PATH = "#{__dirname}/../db/#{process.env['USER']}.json"
-    RESIZER_HOST = 's1.dmcdn.net'
+    DEFAULT_TIMEOUT = 5000
+    DEFAULT_DB_PATH = path.resolve __dirname, "../db/#{process.env['USER']}.json"
 
     constructor: (options = {}) ->
         @options = options
@@ -19,12 +19,22 @@ class StaticFarmUploader
             dbFile = path.resolve "#{db}"
             if not fs.existsSync dbFile then dbFile = DEFAULT_DB_PATH
             @db = new DB dbFile
-        @
+
+        return @
 
     invalidate: (hash) ->
         return unless @db?
         @db.remove hash
-        @
+        return @
+
+    getHostForAsset: (content) ->
+        hash = 0
+        lim = content.length
+        while lim > 0
+            hash = hash * 33 + content.charCodeAt(--lim)
+            hash = (hash + (hash >> 5)) & 0x7ffffff
+        hosts = ['s1.dmcdn.net', 's2.dmcdn.net']
+        return hosts[hash % 2]
 
     upload: (file) ->
         self = @
@@ -32,8 +42,9 @@ class StaticFarmUploader
         def = Q.defer()
 
         basename = path.basename file
-        content = fs.readFileSync(file).toString 'base64'
-        finalContent = querystring.stringify { payload: content }
+        content_raw = fs.readFileSync(file)
+        content_b64 = content_raw.toString 'base64'
+        payload = querystring.stringify { payload: content_b64 }
 
         extension = path.extname basename
         if ~['.js', '.css'].indexOf extension
@@ -51,15 +62,15 @@ class StaticFarmUploader
             method: 'POST'
             headers:
                 'Content-Type': 'application/x-www-form-urlencoded'
-                'Content-Length': finalContent.length
+                'Content-Length': payload.length
 
         if @options.timeout?
             timeout = setTimeout () ->
                 def.reject 'Depot request timed out'
-            , (@options.timeout)
+            , @options.timeout
 
-        req = http.request options, (res) =>
-            clearTimeout timeout
+        req = http.request options, (res) ->
+            clearTimeout timeout if timeout?
 
             _statusCode = res.statusCode
             if 200 < res.statusCode > 203
@@ -70,21 +81,20 @@ class StaticFarmUploader
 
             body = []
             res.setEncoding 'utf8'
-            res.on 'data', (chunk) => body.push "#{chunk}"
-            res.on 'end', =>
+            res.on 'data', (chunk) -> body.push "#{chunk}"
+            res.on 'end', ->
                 [uploadedFile,hash] = body.join('').split('#')
+                cdnUrl = self.getHostForAsset(content_raw.toString()) + '/' + uploadedFile
                 asset = {
                     file:
                         basename: basename
                         inputpath: file
                         fullpath: path.resolve file
                     user: process.env['USER']
-                    url: "#{RESIZER_HOST}/#{uploadedFile}"
+                    url: cdnUrl
                     timestamp: +new Date()
                     hash: hash
                 }
-                if not /^http/.test asset.url
-                    asset.url = 'http://' + asset.url
 
                 if db?
                     db.set(basename, asset)
@@ -98,11 +108,7 @@ class StaticFarmUploader
         req.on 'error', (e) ->
             def.reject 'An error occured:', e.message
 
-        req.end finalContent
-
+        req.end payload
         return def.promise
-
-    list: () ->
-        return @db.findAll () -> true
 
 module.exports = StaticFarmUploader

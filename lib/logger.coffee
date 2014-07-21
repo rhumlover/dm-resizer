@@ -8,12 +8,24 @@ module.exports = {
         cursor.horizontalAbsolute(0).eraseLine()
         @
 
+    clearAt: (x=1, y=1) ->
+        cursor.goto(x, y).horizontalAbsolute(0).eraseLine()
+        @
+
     write: (msg = '') ->
         cursor.write msg
         @
 
     writeln: (msg = '') ->
         cursor.write msg + "\n"
+        @
+
+    writeAt: (msg = '', x=1, y=1) ->
+        cursor.goto(x, y).write msg
+        @
+
+    writelnAt: (msg = '', x=1, y=1) ->
+        cursor.goto(x, y).write msg + "\n"
         @
 
     steps: (n) ->

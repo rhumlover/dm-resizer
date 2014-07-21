@@ -11,9 +11,13 @@ module.exports = (grunt) ->
 
     grunt.initConfig {
         coffeelint:
+            options:
+                'configFile': 'coffeelint.json'
             app: [
                 "Gruntfile.coffee"
-                "tasks/*.coffee"
+                "tasks/{,*/}*.coffee"
+                "bin/{,*/}*.coffee"
+                "lib/{,*/}*.coffee"
             ]
 
         clean:
@@ -42,7 +46,7 @@ module.exports = (grunt) ->
 
     # By default, lint and run all tests.
     grunt.registerTask "default", [
-        "jshint"
+        "coffeelint"
         "test"
     ]
     return

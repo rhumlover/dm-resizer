@@ -4,7 +4,6 @@ fs = require 'fs'
 
 class DB
 
-    _noop = ->
     _resolve = (err, res) ->
         if err? then @reject err else @resolve res
 

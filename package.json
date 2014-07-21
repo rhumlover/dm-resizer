@@ -1,6 +1,6 @@
 {
   "name": "dm-resizer",
-  "description": "Uploads assets to resizer depot",
+  "description": "Dailymotion Resizer modules and CLI utilities",
   "version": "0.1.0",
   "homepage": "https://github.com/rhumlover/dm-resizer",
   "author": {
@@ -21,6 +21,9 @@
     }
   ],
   "main": "Gruntfile.coffee",
+  "bin": {
+    "dm-resizer": "./bin/cli"
+  },
   "engines": {
     "node": ">= 0.8.0"
   },
@@ -38,6 +41,7 @@
     "ansi": "~0.2.1",
     "q": "~1.0.0"
   },
+  "devDependencies": {},
   "peerDependencies": {
     "grunt": "~0.4.1"
   },

@@ -34,7 +34,7 @@ class StaticFarmUploader
             hash = hash * 33 + content.charCodeAt(--lim)
             hash = (hash + (hash >> 5)) & 0x7ffffff
         hosts = ['s1.dmcdn.net', 's2.dmcdn.net']
-        return hosts[hash % 2]
+        return @options.protocol + hosts[hash % 2]
 
     upload: (file) ->
         self = @

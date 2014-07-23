@@ -19,19 +19,19 @@ module.exports = (grunt) ->
         _logger = Logger
         _cursor = _logger.cursor
 
-        options = @options {}
-        {db} = options
+        options = @options {
+            protocol: '//'
+        }
 
         [taskParameters] = @files
         {src,html} = taskParameters
 
-        uploader = new StaticFarmUploader {db}
+        uploader = new StaticFarmUploader options
         uploadedAssets = []
 
         replaceHTMLReference = (previousUrl, cdnUrl, inFiles) ->
-            relativePath = previousUrl.replace 'dist', ''
-            regex_css = new RegExp "url\\([./]*#{relativePath}\\)", "g"
-            regex = new RegExp relativePath, "g"
+            regex_css = new RegExp "url\\([./]*#{previousUrl}\\)", "g"
+            regex = new RegExp previousUrl, "g"
 
             inFiles.forEach (f) ->
                 type = path.extname f

@@ -15,6 +15,8 @@ class StaticFarmUploader
         @options = options
         {db,timeout} = options
 
+        @options.protocol ?= 'http://'
+
         if db isnt false
             dbFile = path.resolve "#{db}"
             if not fs.existsSync dbFile then dbFile = DEFAULT_DB_PATH

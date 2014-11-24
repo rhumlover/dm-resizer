@@ -19,7 +19,8 @@ class StaticFarmUploader
         @options = options
         {db,timeout} = options
 
-        @options.protocol ?= 'http'
+        if !!~Object.keys(HOSTS).indexOf(@options.protocol) is false
+            @options.protocol = 'http'
 
         if db isnt false
             dbFile = path.resolve "#{db}"

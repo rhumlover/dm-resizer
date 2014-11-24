@@ -10,12 +10,16 @@ class StaticFarmUploader
 
     DEFAULT_TIMEOUT = 5000
     DEFAULT_DB_PATH = path.resolve __dirname, "../db/#{process.env['USER']}.json"
+    HOSTS = {
+        http: ['s1.dmcdn.net', 's2.dmcdn.net']
+        https: ['s1-ssl.dmcdn.net', 's2-ssl.dmcdn.net']
+    }
 
     constructor: (options = {}) ->
         @options = options
         {db,timeout} = options
 
-        @options.protocol ?= 'http://'
+        @options.protocol ?= 'http'
 
         if db isnt false
             dbFile = path.resolve "#{db}"
@@ -35,8 +39,8 @@ class StaticFarmUploader
         while lim > 0
             hash = hash * 33 + content.charCodeAt(--lim)
             hash = (hash + (hash >> 5)) & 0x7ffffff
-        hosts = ['s1.dmcdn.net', 's2.dmcdn.net']
-        return @options.protocol + hosts[hash % 2]
+        hosts = HOSTS[@options.protocol]
+        return @options.protocol + '://' + hosts[hash % 2]
 
     upload: (file) ->
         self = @
